@@ -1,0 +1,77 @@
+﻿@model ML.Alumno
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <h2>Alumnos</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h5>Seleccione un alumno para asignarle materias...</h5>
+            <hr />
+        </div>
+    </div>
+
+    <table class="table table-bordered table-responsive" id="tblAlumnoMateria">
+        <thead>
+            <tr>
+                <td class="text-center" style=" font-weight:bold;">Seleccionar</td>
+                <td class="hidden">IdAlumno</td>
+                <td class="text-center" style=" font-weight:bold;">Nombre</td>
+                <td class="text-center" style=" font-weight:bold;">Apellido Paterno</td>
+                <td class="text-center" style=" font-weight:bold;">Apellido Materno</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ML.Alumno alumno in Model.Alumnos)
+            {
+                <tr>
+                    <td class="text-center"><a class="btn alert-info glyphicon glyphicon-check" href="@Url.Action("MateriaGetAsignada", "AlumnoMateria", new { IdAlumno = alumno.IdAlumno })"></a></td>
+                    <td class="hidden">@alumno.IdAlumno</td>
+                    <td class="text-center">@alumno.Nombre</td>
+                    <td class="text-center">@alumno.ApellidoPaterno</td>
+                    <td class="text-center">@alumno.ApellidoMaterno</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+@section Scripts
+    {
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.material.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#tblAlumnoMateria').DataTable({
+                searching: true,
+                "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]],
+                autoWidth: true,
+                columnDefs: [
+                    {
+                        targets: ['_all'],
+                        className: 'mdc-data-table__cell',
+                    },
+                ],
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                },
+            });
+        });
+
+
+    </script>
+
+}
+
+
